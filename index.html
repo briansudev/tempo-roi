@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+        
+        <title>TEMPO ROI CALC - VIA ANALYTICS</title>
+	</head>
+	<body>
+		<div class="navbar navbar-inverse">
+		  <div class="navbar-header navbar-inner">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>
+		    <a class="navbar-brand" href="#"><!-- <img src="img/via_logo.svg" style="height:100%">  -->Via Analytics</a>
+		  </div>
+		  <div class="navbar-collapse collapse navbar-inverse-collapse">
+		    <ul class="nav navbar-nav">
+		      <li class="active"><a href="#">Tempo Calculator</a></li>
+		    </ul>
+		  </div>
+		</div>
+		<div class="col-xs-4">
+			<h1 class='text-center'>Inputs</h1>
+			<div class="panel panel-primary">
+				<div class="panel-heading ttip" title="Items that can be directly measured or estimated and are not affected by Tempo">System Character</div>
+			  <div class="panel-body">
+				<form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="num_routes" class="col-xs-8 control-label" title="Number of routes using Tempo.">Routes using Tempo</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="num_routes" value="1">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="route_length" class="col-xs-8 control-label" title="Route length in km. If there will be multiple routes using Tempo, provide the average across the considered routes.">Route Length (km)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="route_length" value="20">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="num_termini" class="col-xs-8 control-label" title="Number of termini where drivers take their rest. If there will be multiple routes using Tempo, provide the average across the considered routes.">Driver Rest Termini</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="num_termini" value="2">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="avg_pass_dist" class="col-xs-8 control-label" title="Length of a passenger trip: Average distance in km that passengers travel on the route(s) under consideration.">Avg Length of Trip (km)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="avg_pass_dist" value="5">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="pass_ridership" class="col-xs-8 control-label" title="The number of passenger trips that the route serves per year. If there will be more than one route using Tempo, provide the average across the considered routes.">Passenger Ridership</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="pass_ridership" value="438000">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="op_hours" class="col-xs-8 control-label" title="Hours of operation in a day.">Hours of Operation (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="op_hours" value="14">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="shit_dur" class="col-xs-8 control-label" title="The average number of hours that a driver drives before he/she is relieved by another driver.">Shift Duration (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="shift_dur" value="8">
+				    </div>
+				  </div>
+				</form>
+			  </div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading ttip" title="Items that can be directly measured or estimated and could be affected by Tempo. These items require have before Tempo and after Tempo entries.">System Operation</div>
+			  <div class="panel-body">
+        		<h4 class='text-center'>Operator Decisions</h4>
+        		<p><small>* = After Tempo</small></p>
+				<form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="num_buses" class="col-xs-8 control-label" title="Number of buses before Tempo. The average number of buses that simulatenously operate on the route over a typical day. If the number changes across the day, provide an average. If there will be more than one route using Tempo, provide the median value across all considered routes."># Buses</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="num_buses" value="14">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="num_buses_" class="col-xs-8 control-label" title="Number of buses after Tempo. The average number of buses that simulatenously operate on the route over a typical day. If the number changes across the day, provide an average. If there will be more than one route using Tempo, provide the median value across all considered routes."># Buses*</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="num_buses_" value="14">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="num_bus_deps" class="col-xs-8 control-label" title="Number of bus departures from the route's first terminus in one day before Tempo. If there will be more than one route using Tempo, provide the median value across all considered routes."># Bus Departures</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="num_bus_deps" value="157">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="num_bus_deps_" class="col-xs-8 control-label" title="Number of bus departures from the route's first terminus in one day after Tempo. If there will be more than one route using Tempo, provide the median value across all considered routes."># Bus Departures*</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9]*" class="form-control" id="num_bus_deps_" value="147">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="driver_break_time" class="col-xs-8 control-label" title="Driver break time per cycle before Tempo. This is the average number of hours of rest that drivers enjoy for each completion of a route's cycle. If it changes across a day, provide an average. If there will be more than one route using Tempo, provide the median value across all considered routes.">Driver Break Time / cycle (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="driver_break_time" value="0.201">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="driver_break_time_" class="col-xs-8 control-label" title="Driver break time per cycle after Tempo. This is the average number of hours of rest that drivers enjoy for each completion of a route's cycle. If it changes across a day, provide an average. If there will be more than one route using Tempo, provide the median value across all considered routes.">Driver Break Time / cycle* (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="driver_break_time_" value="0.201">
+				    </div>
+				  </div>
+				</form>
+				<h4 class='text-center'>Performance Inputs</h4>
+				<form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="speed" class="col-xs-8 control-label" title="Commercial speed before Tempo. Average speed in km/hr at which the buses travel while in service during the day, including the delays due to passenger collection and delivery but not the delays due to driver breaks at the route's terminii. (Tempo measures it.)">Commercial Speed (km/hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="speed" value="13">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="speed_" class="col-xs-8 control-label" title="Commercial speed after Tempo. Average speed in km/hr at which the buses travel while in service during the day, including the delays due to passenger collection and delivery but not the delays due to driver breaks at the route's terminii. (Tempo measures it.)">Commercial Speed* (km/hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="speed_" value="13">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="punc_dev" class="col-xs-8 control-label" title="Punctuality deviation before Tempo. Standard deviation of the arrival times at the routes teriminii in hours. (It will usually be on the order of a few minutes; Tempo measures it.)">Punctuality Deviation (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="punc_dev" value="0.05">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="punc_dev_" class="col-xs-8 control-label" title="Punctuality deviation after Tempo. Standard deviation of the arrival times at the routes teriminii in hours. (It will usually be on the order of a few minutes; Tempo measures it.)">Punctuality Deviation* (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="punc_dev_" value="0.025">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="serv_int_dev" class="col-xs-8 control-label" title="Service interval deviations before Tempo. Standard deviation of the service interval in hours. (It will usually be on the order of a few minutes. Tempo measures it.)">Service Interval Deviations (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="serv_int_dev" value="0.05">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="serv_int_dev_" class="col-xs-8 control-label" title="Service interval deviations after Tempo. Standard deviation of the service interval in hours. (It will usually be on the order of a few minutes. Tempo measures it.)">Service Interval Deviations* (hr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="serv_int_dev_" value="0.0333">
+				    </div>
+				  </div>
+				</form>
+			  </div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading ttip" title="Subjective items that reflect the client's goals; they are chosen by the client. Default values are suggested.">Valuations</div>
+			  <div class="panel-body">
+				<form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="pass_time_sav" class="col-xs-8 control-label" title="Valuation in $ of one hour saved of passenger riding time. (Default value = $10/pax-hr)">1hr saved of passenger riding time</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="pass_time_sav" value="10">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="pass_wait_time_sav" class="col-xs-8 control-label" title="Valuation in $ of one hour saved of passenger waiting time. (Default value = $20/pax-hr)">1hr saved of passenger waiting time</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="pass_wait_time_sav" value="20">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="bus_capt_cost" class="col-xs-8 control-label" title="Capital cost in $/year of a bus. This should be a bus' capital cost, exclusive of operating costs, amortized over its life. (Default value = $5000/bus-yr)">Capital cost of bus ($/yr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="bus_capt_cost" value="5000">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="bus_opt_cost" class="col-xs-8 control-label" title="Operating cost in $/year of a bus. This should include all the operating and maintenance costs. It can be estimated by dividing the operator's total yearly cost of maintenance and energy by the number of buses (Default value = $20000/bus-yr)">Operating Cost of bus ($/yr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="bus_opt_cost" value="20000">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="drv_shift_cost" class="col-xs-8 control-label" title="Average cost in $/year of staffing a driver's shift for a year. (Default value = $60000/shift-yr). This should be slightly higher than the wages and benefits of a driver because paid drivers do not drive 100% of the time due to staffing difficulties; sicknesses, etc. It can be calculated by diving the total salaries and benefits padi for one year's operation by the number of shits in one year.">Avg cost of staffing a driver's shift for a yr ($/yr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="drv_shift_cost" value="60000">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="drv_inc_break" class="col-xs-8 control-label" title="Value placed on one hour of increased break time for drivers. (Default value = $10/hr.) This is subjective. A value comparable with 50% of a driver's wage is reasonable.">1hr increased break time for drivers</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="drv_inc_break" value="10">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="rm_uncert_drv_rest" class="col-xs-8 control-label" title="Value in removing 1 hour of uncertainty from driver rest. (Default value = $10/hr). This is highly subjective and depends on what drivers want. It is the value that client wishes to place on changing a random sequence of break times such as the following {12', 9', 8', 12', 12', 7'} to a regular sequence with the same total time {10', 10', 10', 10', 10', 10'}. The former sequence has 2 + 1 + 2 + 2 + 2 + 3 = 12 minutes of uncertainty and the second 0. If the client values any such 12-minute improvement at $1.00, then this value should be (1.00/12) x 60 = $5/hr.">1hr of uncertainty removed from driver rest</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="rm_uncert_drv_rest" value="5">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="elm_hour_bus_runtime" class="col-xs-8 control-label" title="Value placed on the societal benefits of eliminating 1 hour of bus running time. (Default value = $5/hr.) This expresses the value placed by the agency in reducing green houes emissions, noise and other environmental effects associated with the operation of a bus. We suggest using a significant fraction of the cost of a bus' energy consumed in one hour of operation.">societal benefits of eliminating 1hr of bus running time</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="elm_hour_bus_runtime" value="5">
+				    </div>
+				  </div>
+				</form>
+			  </div>
+			</div>
+			<div class="panel panel-primary">
+			  <div class="panel-heading ttip" title="Cost of Tempo and cost of IT systems Tempo would replace, including fixed, maintenance and operating costs.">Costs</div>
+			  <div class="panel-body">
+				<form class="form-horizontal" role="form">
+				  <div class="form-group">
+				    <label for="tempo_cost" class="col-xs-8 control-label" title="Yearly cost of Tempo for the route ($/yr): This should include the amortized cost of the tablets and any start-up costs, plus Tempo's yearly subscription-maintenance fee and any yearly communication fees. If there will be more than one route using Tempo, divide the total yearly cost of Tempo by number of routes using Tempo to obtain an average cost across the routes.">Yearly cost of Tempo for the route ($/yr)</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="tempo_cost" value="7000">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="tempo_repl_act_cost" class="col-xs-8 control-label" title="Yearly cost of all activities Tempo would replace. (Default value = $0/yr.) This would include the amortized cost of obsoletized CAD, AVL, dispatching and passenger information systems, as well as all the costs associated with running and of maintaning them. If there will be more than one route using Tempo, divide teh total yearly cost of all the routes by the number of routes using Tempo to obtain an average cost across the routes.">Yearly cost of all activities Tempo would replace</label>
+				    <div class="col-xs-4">
+				      <input type="text" pattern="[0-9\.]*" class="form-control" id="tempo_repl_act_cost" value="0">
+				    </div>
+				  </div>
+				</form>
+			  </div>
+			</div>
+		</div>
+		<div class='col-offset-xs-4 col-xs-8'>
+			<span class="fixme">
+			<h1 class='text-center'>ROI</h1>
+			<div class='panel panel-primary'>
+				<div class='panel-heading'>
+				<br>
+				</div>
+				<div class='panel-body text-center'>
+					<div id="chart" class='chart'></div>
+					<br>
+<!--
+					<strong>Benefit 1 - Reduction in operator costs (IT): </strong><span id='b1'></span><br>
+					<strong>Benefit 2 - Reduction in operator costs (operations): </strong><span id='b2'></span><br>
+					<strong>Benefit 3 - Reduction in passenger waiting time: </strong><span id='b3'></span><br>
+					<strong>Benefit 4 - Reduction in passenger riding time: </strong><span id='b4'></span><br>
+					<strong>Benefit 5 - Reduction in driver breaks: </strong><span id='b5'></span><br>
+					<strong>Benefit 6 - Reduction in regularity of driver breaks: </strong><span id='b6'></span><br>
+					<strong>Benefit 7 - Reduction in external costs to society: </strong><span id='b7'></span><br>
+					<strong>Annualized Operator ROI (%): </strong><span id='op_roi'></span><br>
+					<strong>Annualized Overall ROI (%): </strong><span id='ovr_roi'></span><br>
+-->
+                    <div id="roi-chart"></div>
+                    <div class="">
+                        <br>
+                        <p>Download the <a href="#">white paper here</a>.</p>
+                        <p>Print a pdf of your calculations <a href="#">here</a>.</p>
+                    </div>
+				</div>
+			</div>
+			</span>
+		</div>
+	</body>
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/d3.min.js"></script>
+    <script src="js/numeral.min.js"></script>
+	<script src="js/calc.js"></script>
+
+    <script src="js/barObject.js"></script>
+	<script src="js/input.js"></script>
+	<script>
+		var fixmeTop = $('.fixme').offset().top;
+		$(window).scroll(function() {
+		    var currentScroll = $(window).scrollTop();
+            console.log($(".fixme").offsetWidth);
+		    if (currentScroll >= fixmeTop) {
+		        $('.fixme').css({
+		            position: 'fixed',
+		            top: '0px',
+                    width: '65%'
+		        });
+		    } else {
+		        $('.fixme').css({
+		            position: 'static'
+		        });
+		    }
+		});
+	</script>
+	<script type='text/javascript'>
+	   $(document).ready(function () {
+			if ($(".control-label").length) {
+                $(".control-label").tooltip({
+                });
+			}
+            if ($(".ttip").length) {
+                $(".ttip").tooltip({
+                    placement: 'bottom'
+                })
+            }
+ 		});
+     </script>
+</html>
